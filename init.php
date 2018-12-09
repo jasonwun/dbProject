@@ -40,7 +40,7 @@
       var locationSelect;
 
         function initMap() {
-          var sydney = {lat: 40.724385, lng: -74.037726};
+          var sydney = {lat: 40.739217, lng: -73.9754976};
           map = new google.maps.Map(document.getElementById('map'), {
             center: sydney,
             zoom: 16,
@@ -90,7 +90,7 @@
          clearLocations();
 
          var radius = document.getElementById('radiusSelect').value;
-         var searchUrl = 'init.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius=' + radius;
+         var searchUrl = 'locations.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius=' + radius;
          var tmp = 1;
          downloadUrl(searchUrl, function(data) {
            var xml = parseXml(data);

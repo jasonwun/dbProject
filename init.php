@@ -17,7 +17,17 @@
     }
  </style>
   </head>
+  
   <body style="margin:0px; padding:0px;" onload="initMap()">
+    <div id="LoginForm">
+      <label for="usernameInput">UserName:</label>
+      <input type="text" id="usernameInput" size="15"/>
+      <label for="passwordInput">Password:</label>
+      <input type="text" id="passwordInput" size="15"/>
+      <input type="button" id="loginbutton" value="Login"/>
+      <label for="loginstatus" id="loginstatus" style="color:Red; display:none" >UserName/Password combination is not correct</label>
+    </div>
+    <label id="UserName" for="displayUserName" style="display:none"></label>
     <div>
          <label for="raddressInput">Search location:</label>
          <input type="text" id="addressInput" size="15"/>
@@ -50,7 +60,7 @@
           infoWindow = new google.maps.InfoWindow();
 
           searchButton = document.getElementById("searchButton").onclick = searchLocations;
-
+          loginButton = document.getElementById("loginbutton").onclick = login;
           locationSelect = document.getElementById("locationSelect");
           locationSelect.onchange = function() {
             var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
@@ -58,6 +68,59 @@
               google.maps.event.trigger(markers[markerNum], 'click');
             }
           };
+        }
+
+        function login(){
+          var status = document.getElementById("loginstatus");
+          status.style.display = "none";
+          var username = document.getElementById("usernameInput").value;
+          var psd = document.getElementById("passwordInput").value;
+          loginRequest("login.php?username="+username+"&password="+psd, function(data){
+                var xml = parseXml(data);
+                var userNodes = xml.documentElement.getElementsByTagName("users");
+                var id = userNodes[0].getAttribute("id");
+                var name = userNodes[0].getAttribute("username");
+                var latlng = new google.maps.LatLng(
+                  parseFloat(userNodes[0].getAttribute("lat")),
+                  parseFloat(userNodes[0].getAttribute("lng")));
+                var time = userNodes[0].getAttribute("utime");
+                var state = userNodes[0].getAttribute("ustate");
+                document.getElementById("UserName").textContent = "Hello " + name;
+                document.getElementById("UserName").style.display = "inline";
+                document.getElementById("LoginForm").style.display = "none";
+                map.setCenter(latlng);
+
+
+                 var marker = new google.maps.Marker({
+                          map: map,
+                          position: latlng,
+                          animation: google.maps.Animation.DROP,
+                          icon: 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png'
+                        });
+
+
+                
+        });
+      }
+
+        function loginRequest(url, callback){
+          var request = window.ActiveXObject ?
+              new ActiveXObject('Microsoft.XMLHTTP') :
+              new XMLHttpRequest;
+
+           request.onreadystatechange = function() {
+            if (request.readyState == 4) {
+              request.onreadystatechange = doNothing;
+              callback(request.responseText, request.status);
+            }
+            else{
+              var status = document.getElementById("loginstatus");
+              status.style.display = "inline";
+            }  
+          };
+
+          request.open('GET', url, true);
+          request.send(null);
         }
 
        function searchLocations() {

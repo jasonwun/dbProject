@@ -63,9 +63,12 @@
               <th>FilterName</th>
           </tr>
         </table>
-        <input type="button" id="editFilters" value="Add new filter"/>
+        <input type="button" id="addFilter" value="Add new filter"/>
     </div>
-
+    <div>
+        <input type="button" id="addNote" value="Add new Note"/>
+    </div>
+    
 
     <script>
       var user = {
@@ -86,7 +89,7 @@
       var markers = [];
       var infoWindow;
       var locationSelect;
-
+      var usermarker = null;
       
 
         function initMap() {
@@ -99,10 +102,10 @@
           });
           infoWindow = new google.maps.InfoWindow();
 
-          var usermarker = new google.maps.Marker({ //Current Location marker
+          usermarker = new google.maps.Marker({ //Current Location marker
                           map: map,
                           animation: google.maps.Animation.DROP,
-                          icon: 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png'
+                          icon: "http://maps.google.com/mapfiles/ms/icons/blue.png"
                         }); //change marker location by using usermarker.setPosition(latlng)
 
           searchButton = document.getElementById("searchButton").onclick = searchLocations;
@@ -140,10 +143,18 @@
                 document.getElementById("UserName").style.display = "inline";
                 document.getElementById("LoginForm").style.display = "none";
                 map.setCenter(latlng);
-
+                usermarker.setPosition(latlng);
 
                 GetFilters();
+
+
+                UpdateMapMarkerView();
         });
+      }
+
+      function UpdateMapMarkerView(){ //Update the Note Markers everytime we change our time/location or even login since we display all notes on the map
+
+
       }
 
         function GetFilters(){
@@ -161,11 +172,9 @@
                   var cell1 = row.insertCell(0);
                   var cell2 = row.insertCell(1);
                   var cell3 = row.insertCell(2);
-                  var cell4 = row.insertCell(3);
-                  cell1.innerHTML = id;
-                  cell2.innerHTML = name;
-                  cell3.innerHTML = "<a href=editFilter.php?fid=" + id + ">Edit this Filter</a>";
-                  cell4.innerHTML = "<a href=deleteFilter.php?id=" + id + ">Delete this Filter</a>";
+                  cell1.innerHTML = name;
+                  cell2.innerHTML = "<a href=editFilter.php?fid=" + id + ">Edit this Filter</a>";
+                  cell3.innerHTML = "<a href=deleteFilter.php?id=" + id + ">Delete this Filter</a>";
               }
             });
           }

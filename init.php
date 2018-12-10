@@ -2,7 +2,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <title>Creating a Store Locator on Google Maps</title>
+    <title>Project</title>
   <style>
     /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
@@ -15,17 +15,21 @@
       margin: 0;
       padding: 0;
     }
+
+    #filterdiv{
+      margin:30px;
+    }
  </style>
   </head>
   
   <body style="margin:0px; padding:0px;" onload="initMap()">
     <div id="LoginForm">
-      <label for="usernameInput">UserName:</label>
+      <label>UserName:</label>
       <input type="text" id="usernameInput" size="15"/>
-      <label for="passwordInput">Password:</label>
+      <label>Password:</label>
       <input type="text" id="passwordInput" size="15"/>
       <input type="button" id="loginbutton" value="Login"/>
-      <label for="loginstatus" id="loginstatus" style="color:Red; display:none" >UserName/Password combination is not correct</label>
+      <label id="loginstatus" style="color:Red; display:none" >UserName/Password combination is not correct</label>
     </div>
     <label id="UserName" for="displayUserName" style="display:none"></label>
     <div>
@@ -42,22 +46,63 @@
         <input type="button" id="searchButton" value="Search"/>
     </div>
     <div><select id="locationSelect" style="width: 10%; visibility: hidden"></select></div>
-    <div id="map" style="width: 100%; height: 90%"></div>
+    <div id="map" style="width: 50%; height: 93%; float:left"></div>
+    <div id="loctimediv">
+          <label >Time Selector</label>
+          <input type="datetime-local" name="userDate" id="usercurrenttime"/>
+          <input type="button" value="update" id="updateusercurrenttime"/>
+          <label id="timeupdatestatus">The datetime value should not be earliear than 2018-09-25 00:00:00</label>
+    </div>
+
+    <div id="filterdiv">
+        <label id="ExistFiltersNum"></label>
+        <table id="FilterTable" border='3'>
+          <tr>
+              <th>FilterId</th>
+              <th>FilterName</th>
+          </tr>
+        </table>
+        <input type="button" id="editFilters" value="Add new filter"/>
+    </div>
+
+
     <script>
+      var user = {
+        id : null,
+        name : null,
+        latlng : null,
+        time : null,
+        state : null,
+      }
+
+      var filter = {
+        id : null,
+        name : null
+      }
+
+      var filters = [];
       var map;
       var markers = [];
       var infoWindow;
       var locationSelect;
 
+      
+
         function initMap() {
-          var sydney = {lat: 40.739217, lng: -73.9754976};
+          var loca = {lat: 40.739217, lng: -73.9754976};
           map = new google.maps.Map(document.getElementById('map'), {
-            center: sydney,
+            center: loca,
             zoom: 16,
             mapTypeId: 'roadmap',
             mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
           });
           infoWindow = new google.maps.InfoWindow();
+
+          var usermarker = new google.maps.Marker({ //Current Location marker
+                          map: map,
+                          animation: google.maps.Animation.DROP,
+                          icon: 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png'
+                        }); //change marker location by using usermarker.setPosition(latlng)
 
           searchButton = document.getElementById("searchButton").onclick = searchLocations;
           loginButton = document.getElementById("loginbutton").onclick = login;
@@ -83,25 +128,64 @@
                 var latlng = new google.maps.LatLng(
                   parseFloat(userNodes[0].getAttribute("lat")),
                   parseFloat(userNodes[0].getAttribute("lng")));
-                var time = userNodes[0].getAttribute("utime");
-                var state = userNodes[0].getAttribute("ustate");
+                var time = userNodes[0].getAttribute("time");
+                var state = userNodes[0].getAttribute("state");
+                user.id = id;
+                user.name = name;
+                user.latlng = latlng;
+                user.time = time;
+                user.state = state;
                 document.getElementById("UserName").textContent = "Hello " + name;
                 document.getElementById("UserName").style.display = "inline";
                 document.getElementById("LoginForm").style.display = "none";
                 map.setCenter(latlng);
 
 
-                 var marker = new google.maps.Marker({
-                          map: map,
-                          position: latlng,
-                          animation: google.maps.Animation.DROP,
-                          icon: 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png'
-                        });
-
-
-                
+                GetFilters();
         });
       }
+
+        function GetFilters(){
+          if(user.id != null){
+            url = "getAllFilters.php?uid=" + user.id;
+            GetFiltersRequest(url, function(data){
+              var xml = parseXml(data);
+              var filterNodes = xml.documentElement.getElementsByTagName("filter");
+              var table = document.getElementById("FilterTable");
+              for (var i = 0; i < filterNodes.length; i++){
+                  var id = filterNodes[i].getAttribute("filterid");
+                  var name = filterNodes[i].getAttribute("filterdesc");
+                  filters.push({id, name});
+                  var row = table.insertRow(1);
+                  var cell1 = row.insertCell(0);
+                  var cell2 = row.insertCell(1);
+                  var cell3 = row.insertCell(2);
+                  var cell4 = row.insertCell(3);
+                  cell1.innerHTML = id;
+                  cell2.innerHTML = name;
+                  cell3.innerHTML = "<a href=editFilter.php?fid=" + id + ">Edit this Filter</a>";
+                  cell4.innerHTML = "<a href=deleteFilter.php?id=" + id + ">Delete this Filter</a>";
+              }
+            });
+          }
+        }
+
+        function GetFiltersRequest(url, callback){
+          var request = window.ActiveXObject ?
+              new ActiveXObject('Microsoft.XMLHTTP') :
+              new XMLHttpRequest;
+
+          request.onreadystatechange = function() {
+            if (request.readyState == 4) {
+              request.onreadystatechange = doNothing;
+              callback(request.responseText, request.status);
+            }
+          };
+
+          request.open('GET', url, true);
+          request.send(null);
+        }
+
 
         function loginRequest(url, callback){
           var request = window.ActiveXObject ?

@@ -89,5 +89,6 @@ create table Filter(fid integer AUTO_INCREMENT primary key,
                     fstarttime time null,
                     fendtime time null,
                     fvisibility varchar(10),
+                    fname varchar(100),
                     foreign key (fuid) references Users(uid) on delete cascade,
                     foreign key (ftag) references Tag(tid) on delete cascade);

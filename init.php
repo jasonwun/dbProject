@@ -23,6 +23,8 @@
   </head>
   
   <body style="margin:0px; padding:0px;" onload="initMap()">
+    
+    <div id="map" style="width: 50%; height: 100%; float:left"></div>
     <div id="LoginForm">
       <label>UserName:</label>
       <input type="text" id="usernameInput" size="15"/>
@@ -46,7 +48,6 @@
         <input type="button" id="searchButton" value="Search"/>
     </div>
     <div><select id="locationSelect" style="width: 10%; visibility: hidden"></select></div>
-    <div id="map" style="width: 50%; height: 93%; float:left"></div>
     <div id="loctimediv">
           <label >Time Selector</label>
           <input type="datetime-local" name="userDate" id="usercurrenttime"/>

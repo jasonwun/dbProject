@@ -34,20 +34,6 @@
       <label id="loginstatus" style="color:Red; display:none" >UserName/Password combination is not correct</label>
     </div>
     <label id="UserName" for="displayUserName" style="display:none"></label>
-    <div>
-         <label for="raddressInput">Search location:</label>
-         <input type="text" id="addressInput" size="15"/>
-        <label for="radiusSelect">Radius:</label>
-        <select id="radiusSelect" label="Radius">
-          <option value="50" selected>50 kms</option>
-          <option value="30">30 kms</option>
-          <option value="20">20 kms</option>
-          <option value="10">10 kms</option>
-        </select>
-
-        <input type="button" id="searchButton" value="Search"/>
-    </div>
-    <div><select id="locationSelect" style="width: 10%; visibility: hidden"></select></div>
     <div id="loctimediv">
           <label >Time Selector</label>
           <input type="datetime-local" name="userDate" id="usercurrenttime"/>
@@ -59,7 +45,6 @@
         <label id="ExistFiltersNum"></label>
         <table id="FilterTable" border='3'>
           <tr>
-              <th>FilterId</th>
               <th>FilterName</th>
           </tr>
         </table>
@@ -105,18 +90,33 @@
           usermarker = new google.maps.Marker({ //Current Location marker
                           map: map,
                           animation: google.maps.Animation.DROP,
-                          icon: "http://maps.google.com/mapfiles/ms/icons/blue.png"
+                          icon: "http://maps.google.com/mapfiles/ms/icons/blue.png",
+                          draggable:true
                         }); //change marker location by using usermarker.setPosition(latlng)
 
-          searchButton = document.getElementById("searchButton").onclick = searchLocations;
           loginButton = document.getElementById("loginbutton").onclick = login;
-          locationSelect = document.getElementById("locationSelect");
-          locationSelect.onchange = function() {
-            var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
-            if (markerNum != "none"){
-              google.maps.event.trigger(markers[markerNum], 'click');
+
+          map.addListener('click',function(event) {
+            if(usermarker.getPosition() != null){
+              usermarker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
+              UpdateMapMarkerView();
             }
-          };
+          });
+
+          usermarker.addListener('dragend', function(event){
+            var lat = usermarker.getPosition().lat();
+            var lng = usermarker.getPosition().lng();
+            UpdateMapMarkerView();
+          });
+
+        }
+
+
+        
+
+        function handleEvent(event) {
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
         }
 
         function login(){
@@ -153,8 +153,20 @@
       }
 
       function UpdateMapMarkerView(){ //Update the Note Markers everytime we change our time/location or even login since we display all notes on the map
+            var url = "GetNotes.php?uid=" + user.id;
+            downloadUrl(url, function(data)){
+              var xml = parseXml(data);
+              var NotesNodes = xml.documentElement.getElementByTagName("Note");
+              for(var i = 0; i < NotesNodes.length; i++){
+                  //need note id
+                  //need note location's name
+              }
 
-
+              createMarker(latlng, name, address);
+              bounds.extend(latlng);
+              map.setCenter(latlng);
+            }
+            map.fitBounds(bounds);
       }
 
         function GetFilters(){
@@ -263,11 +275,9 @@
                   parseFloat(markerNodes[i].getAttribute("lng")));
 
              createOption(name, distance, i);
-             createMarker(latlng, name, address);
-             bounds.extend(latlng);
-             map.setCenter(latlng);
+             
            }
-           map.fitBounds(bounds);
+           
            locationSelect.style.visibility = "visible";
            locationSelect.onchange = function() {
              var markerNum = locationSelect.options[locationSelect.selectedIndex].value;

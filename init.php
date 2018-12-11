@@ -153,20 +153,20 @@
       }
 
       function UpdateMapMarkerView(){ //Update the Note Markers everytime we change our time/location or even login since we display all notes on the map
-            var url = "GetNotes.php?uid=" + user.id;
-            downloadUrl(url, function(data)){
-              var xml = parseXml(data);
-              var NotesNodes = xml.documentElement.getElementByTagName("Note");
-              for(var i = 0; i < NotesNodes.length; i++){
-                  //need note id
-                  //need note location's name
-              }
+            // var url = "GetNotes.php?uid=" + user.id;
+            // downloadUrl(url, function(data)){
+            //   var xml = parseXml(data);
+            //   var NotesNodes = xml.documentElement.getElementByTagName("Note");
+            //   for(var i = 0; i < NotesNodes.length; i++){
+            //       //need note id
+            //       //need note location's name
+            //   }
 
-              createMarker(latlng, name, address);
-              bounds.extend(latlng);
-              map.setCenter(latlng);
-            }
-            map.fitBounds(bounds);
+            //   createMarker(latlng, name, address);
+            //   bounds.extend(latlng);
+            //   map.setCenter(latlng);
+            // }
+            // map.fitBounds(bounds);
       }
 
         function GetFilters(){

@@ -24,7 +24,7 @@
 
   <?php
   session_start();
-
+  /*echo $_SESSION['username'];*/
   ?>
   <body style="margin:0px; padding:0px;" onload="initMap()">
 
@@ -42,6 +42,15 @@
       <label id="loginstatus" style="color:Red; display:none" >UserName/Password combination is not correct</label>
     </div>
     <label id="UserName" for="displayUserName" style="display:none"></label> -->
+    <br>
+    <div>
+        <form method="post" action="friend_request.php">
+          <tr>
+            <input name="friendName" type="input"/> <input type="submit" value="Add Friends" name="AddFriend" />
+          </tr>
+        </form>
+    </div>
+    <br>
     <div id="loctimediv">
           <label >Time Selector</label>
           <input type="datetime-local" name="userDate" id="usercurrenttime"/>

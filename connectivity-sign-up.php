@@ -20,7 +20,7 @@ Function NewUser(){
   if($result){
     	echo "YOUR REGISTRATION IS COMPLETED...";
       echo "<br>";
-      echo "<a href='init.php'>Go Back</a>";
+      echo "<a href='index.php'>Go Back</a>";
   }
 }
 Function SignUp(){
@@ -39,7 +39,7 @@ Function SignUp(){
     else{
       echo "Already registered";
       echo "<br>";
-      echo "<a href='init.php'>Go Back</a>";
+      echo "<a href='index.php'>Go Back</a>";
     }
 
 }

@@ -24,13 +24,13 @@
 
   <?php
   session_start();
-  $secretword = $_SESSION["username"] ;
-  echo $secretword;
+
   ?>
   <body style="margin:0px; padding:0px;" onload="initMap()">
 
     <div id="map" style="width: 50%; height: 100%; float:left"></div>
-    <div id="LoginForm">
+
+    <!-- <div id="LoginForm">
       <label>UserName:</label>
       <input type="text" id="usernameInput" size="15"/>
       <label>Password:</label>
@@ -41,7 +41,7 @@
       <br>
       <label id="loginstatus" style="color:Red; display:none" >UserName/Password combination is not correct</label>
     </div>
-    <label id="UserName" for="displayUserName" style="display:none"></label>
+    <label id="UserName" for="displayUserName" style="display:none"></label> -->
     <div id="loctimediv">
           <label >Time Selector</label>
           <input type="datetime-local" name="userDate" id="usercurrenttime"/>

@@ -1,5 +1,5 @@
 insert into Users(username, email, password, ulatt, ulong, utime, ustate) values 
-    ('Emma','Emma@yahoo.com','1Hr6Of',40.7121222,-73.9661,'2018-09-27 08:17:00','Boring'),
+    ('Emma','Emma@yahoo.com','1Hr6Of',40.7121222,-73.9661,'2018-09-27 08:17:00','Working'),
     ('Olivia','Olivia@gmail.com','9Lj5Dh',40.7107182,-73.9692,'2018-09-25 07:52:00','Happy'),
     ('Sophia','Sophia@hotmail.com','9Ic0Jw',40.7235737,-74.0018,'2018-09-03 07:01:00','Boring'),
     ('Isabella','Isabella@yahoo.com','3Es1Kf',40.755814,-73.9531,'2018-08-31 07:26:00','Hungry'),
@@ -30,44 +30,50 @@ insert into Users(username, email, password, ulatt, ulong, utime, ustate) values
     ('Layla','Layla@yahoo.com','6Sy6Dy',40.7067937,-73.9708,'2018-09-03 07:35:00','Happy');
                 
 insert into Friendship(user1, user2, status) values 
-    (26,6,1),
-    (29,5,1),
-    (5,12,1),
-    (27,23,1),
-    (14,26,1),
-    (5,2,1),
-    (28,24,1),
-    (24,16,1),
-    (26,25,1),
-    (25,17,1),
-    (14,17,1),
-    (23,13,1),
-    (8,5,1),
-    (4,24,1),
-    (2,21,1),
-    (11,3,1),
-    (16,23,1),
-    (6,26,1),
-    (5,29,1),
-    (12,5,1),
-    (23,27,1),
-    (26,14,1),
+    (1,4,1),
+    (1,12,1),
+    (1,15,1),
     (2,5,1),
-    (24,28,1),
-    (16,24,1),
-    (25,26,1),
-    (17,25,1),
-    (17,14,1),
-    (13,23,1),
-    (5,8,1),
-    (24,4,1),
-    (21,2,1),
+    (2,21,1),
     (3,11,1),
-    (23,16,1);
+    (4,1,1),
+    (4,24,1),
+    (5,2,1),
+    (5,8,1),
+    (5,12,1),
+    (5,29,1),
+    (6,26,1),
+    (8,5,1),
+    (11,3,1),
+    (12,1,1),
+    (12,5,1),
+    (13,23,1),
+    (14,17,1),
+    (14,26,1),
+    (15,1,1),
+    (16,23,1),
+    (16,24,1),
+    (17,14,1),
+    (17,25,1),
+    (21,2,1),
+    (23,13,1),
+    (23,16,1),
+    (23,27,1),
+    (24,4,1),
+    (24,16,1),
+    (24,28,1),
+    (25,17,1),
+    (25,26,1),
+    (26,6,1),
+    (26,14,1),
+    (26,25,1),
+    (27,23,1),
+    (28,24,1),
+    (29,5,1);
 
 
 insert into Location values 
-     ('ChIJdfuappxZwokRf_gWCLv9f5g','The Mermaid Inn','96 2nd Avenue, New York',40.7270599,-73.9885768),
+    ('ChIJdfuappxZwokRf_gWCLv9f5g','The Mermaid Inn','96 2nd Avenue, New York',40.7270599,-73.9885768),
     ('ChIJM_DHP4dZwokRyGVj-sLGues','Casa Mezcal','86 Orchard Street, New York',40.7179284,-73.9901252),
     ('ChIJ2YfN_aBZwokR4i0_kCIix3o','Maialino','2 Lexington Avenue, New York',40.7385531,-73.985895),
     ('ChIJd5vUG5tZwokR4auQzzfh1Fs','Gyu-Kaku Japanese BBQ','34 Cooper Square, New York',40.728237,-73.9914863),
@@ -972,12 +978,13 @@ INSERT INTO Location VALUES
     ('ChIJG0RxcSBawokRwILbKJBIdZA','CrossFit 212','666 Broadway, New York',40.726906,-73.995081);
 
 INSERT INTO Schedule (schedule_id, sdate, startime, endtime) VALUES
-    (1,"2018-09-25",'10:00','18:00'),
-    (2,"2018-09-25",'19:00','23:00'),
-    (3,"2018-09-25",'9:00','10:00'),
-    (4,"2018-09-25",'11:00','13:00');
+    ('2018-09-27','10:00:00','18:00:00'),
+    ('2018-09-25','19:00:00','23:00:00'),
+    ('2018-09-25','9:00:00','10:00:00'),
+    ('2018-09-25','11:00:00','13:00:00');
 
 insert into Note(nuid, place_id, nradius, schedule_id, nvisibility, ncontent) values
+    (5,"ChIJox2YKo9ZwokRJeku_PO_CjI",1500,1,"friend","A good place"),
     (14,'ChIJ4zGFAZpYwokRGUGph3Mf37k',1000,1,'private','Nice weather!'),
     (2,'ChIJ4zGFAZpYwokRGUGph3Mf37k',1000,1,'everyone','A big tree here!'),
     (27,'ChIJ4zGFAZpYwokRGUGph3Mf37k',1000,1,'friend','So many prople in Central Park!'),
@@ -991,7 +998,7 @@ insert into Note(nuid, place_id, nradius, schedule_id, nvisibility, ncontent) va
     (26,'ChIJ4zGFAZpYwokRGUGph3Mf37k',1000,1,'everyone','Good morning from CentralParkNYC'),
     (4,'ChIJ85aDTUpawokR95FkWT0xm9o',1000,2,'friend','Heavy Homework!'),
     (7,'ChIJ85aDTUpawokR95FkWT0xm9o',1000,2,'everyone','The Christmas tree is lit up!'),
-    (15,'ChIJ85aDTUpawokR95FkWT0xm9o',1000,3,'private','Cold today!'),
+    (15,'ChIJ85aDTUpawokR95FkWT0xm9o',1000,3,'everyone','Cold today!'),
     (2,'ChIJ85aDTUpawokR95FkWT0xm9o',1000,2,'friend','Sleepy in class!'),
     (11,'ChIJ4agA4q1bwokRi-gLlTrHyRQ',1000,1,'friend','The store is close to campus!'),
     (15,'ChIJ4agA4q1bwokRi-gLlTrHyRQ',1000,1,'friend','So many items here!'),
@@ -1030,7 +1037,9 @@ insert into Tag(tagname) values ("Breakfast"),
                                 ("Dinner"),
                                 ("Brunch");
 
-insert into repeats (repeat_id, daynum) values (1, 2), (1,4);
+insert into repeats (repeat_id, daynum) values 
+                                        (1,2),
+    (1,5);
 insert into repeatschedule (schedule_id, repeat_id) values (3,1);
 
 
@@ -1082,10 +1091,12 @@ insert into NoteTag values
     (43,1),
     (44,3),
     (45,4);
+    (46,2);
+    (46,1);
 
 
 insert into Filter(fuid, ftag, fstate, place_id, fradius, fdate, fstarttime, fendtime, fvisibility, fname) values 
-     (28,3,'Boring','ChIJna1sVURawokR7KKXO0RhaS4',100,'2018-09-20 00:00:00','8:21:19','8:54:47','friend','Only for Working'),
+    (28,3,'Boring','ChIJna1sVURawokR7KKXO0RhaS4',100,'2018-09-20 00:00:00','8:21:19','8:54:47','friend','Only for Working'),
     (29,3,'Boring','ChIJRzzoh_VZwokRdXF0AL5vPvA',100,'2018-09-19 00:00:00','7:42:33','8:14:20','private','Only for Hanging out'),
     (7,2,'Boring','ChIJ06nHSrNbwokR1tKMiNmG2SU',100,'2018-09-30 00:00:00','8:16:20','10:46:23','private','Only for Nothing'),
     (4,4,'Boring','ChIJl3LSeqNZwokRYlGJkbotrW4',1000,'2018-09-27 00:00:00','7:15:14','8:26:23','everyone','Only for Working'),
@@ -1119,7 +1130,8 @@ insert into Filter(fuid, ftag, fstate, place_id, fradius, fdate, fstarttime, fen
     (17,2,'Happy','ChIJq3tH0I5YwokRfL6Y8j8E6DM',10,'2018-09-23 00:00:00','7:05:15','7:39:36','friend','Only for Nothing'),
     (26,1,'Hungry','ChIJQ8wDlCZawokRNw8gV7Hooa0',1000,'2018-09-26 00:00:00','8:24:23','10:06:54','private','Only for Eating'),
     (19,3,'Hungry','ChIJ5TSt0jNawokRITB7vWiHEpU',100,'2018-09-30 00:00:00','8:43:22','11:05:08','friend','Only for Hanging out'),
-    (7,1,'Hungry','ChIJn6HFQ0xawokRXMlJK1gBZD8',2000,'2018-09-28 00:00:00','8:15:13','9:49:40','private','Only for Eating');
+    (7,1,'Hungry','ChIJn6HFQ0xawokRXMlJK1gBZD8',2000,'2018-09-28 00:00:00','8:15:13','9:49:40','private','Only for Eating'),
+    (1,2,'Working','ChIJg3mzWwlZwokRlegfYeZecEk',1500,'2018-09-27 00:00:00','4:00:00','23:00:00','everyone','Only for Working');
 
 
 

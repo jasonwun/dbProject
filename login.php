@@ -5,6 +5,7 @@ $username = $_GET["username"];
 $password = $_GET["password"];
 
 
+
 $pdo = pdo_connect();
 
 $query = sprintf("select * from Users where username = '%s' and password = '%s'",

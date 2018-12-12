@@ -90,32 +90,10 @@ create table Filter(fid integer AUTO_INCREMENT primary key,
                     foreign key (ftag) references Tag(tid) on delete cascade);
 
 
-create temporary table AllNote 
-select nid, nuid, place_name, address, lat, lng, nradius, nvisibility, ncontent, sdate,startime, endtime, daynum, tagname from Note 
-natural join location 
-natural join schedule
-natural join notetag 
-natural join tag 
-left join repeatschedule on repeatschedule.schedule_id = Note.schedule_id
-left join repeats on repeatschedule.repeat_id = repeats.repeat_id;
-
-create TEMPORARY table AllFilter
-select fid, ftag, fuid, tagname, fstate, lat,lng, ulatt, ulong, fradius, fdate, fstarttime, fendtime, utime, fvisibility, fname, ustate, tid,user2
-from filter
-natural join location
-join Users on fuid = uid
-join tag on tid = ftag
-left join Friendship on fuid = user1
-where fuid = 1;
-
-
-select distinct AllNote.nid, nuid, place_name, ncontent, AllNote.lat lat, AllNote.lng lng, ftag, tid, ustate, fstate, nvisibility, fvisibility
-from AllNote
-join AllFilter
-where mydistance(ulatt, ulong, AllFilter.lat, AllFilter.lng) <= fradius
-and mydistance(ulatt,ulong, AllNote.lat, AllFilter.lng) <= nradius
-And Date(utime) = fdate And time(utime) between fstarttime And fendtime
-And (Date(utime) = sdate or dayofweek(utime) = daynum)
-And ((ftag = tid and ustate = fstate) Or (ftag=tid and fstate = null) Or (ftag=null And fstate=null) Or (ftag = null And fstate=ustate))
-And ((fvisibility= 'everyone' And (nvisibility='everyone' Or (nvisibility = 'friend' And nuid=user2) Or (nvisibility = 'private' And nuid=fuid)))
-Or (fvisibility='friend' And nuid=user2 And (nvisibility= 'everyone' Or nvisibility= 'friend')));
+DELIMITER // 
+create function mydistance(lat1 double, lon1 double, lat2 double, lon2 double) returns double 
+BEGIN 
+return format(degrees(acos(cos(radians(lat1)) * cos(radians(lat2)) * cos(radians(lon2) - radians(lon1)) + sin(radians(lat1)) * sin(radians(lat2)) )) * 3961.0, 1); 
+END;
+//
+DELIMITER ;

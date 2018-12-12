@@ -29,41 +29,41 @@ insert into Users(username, email, password, ulatt, ulong, utime, ustate) values
     ('Hannah','Hannah@hotmail.com','3Jp0Rb',40.7746571,-73.9878,'2018-09-13 07:36:00','Happy'),
     ('Layla','Layla@yahoo.com','6Sy6Dy',40.7067937,-73.9708,'2018-09-03 07:35:00','Happy');
                 
-insert into Friendship(user1, user2) values 
-    (26,6),
-    (29,5),
-    (5,12),
-    (27,23),
-    (14,26),
-    (5,2),
-    (28,24),
-    (24,16),
-    (26,25),
-    (25,17),
-    (14,17),
-    (23,13),
-    (8,5),
-    (4,24),
-    (2,21),
-    (11,3),
-    (16,23),
-    (6,26),
-    (5,29),
-    (12,5),
-    (23,27),
-    (26,14),
-    (2,5),
-    (24,28),
-    (16,24),
-    (25,26),
-    (17,25),
-    (17,14),
-    (13,23),
-    (5,8),
-    (24,4),
-    (21,2),
-    (3,11),
-    (23,16);
+insert into Friendship(user1, user2, status) values 
+    (26,6,1),
+    (29,5,1),
+    (5,12,1),
+    (27,23,1),
+    (14,26,1),
+    (5,2,1),
+    (28,24,1),
+    (24,16,1),
+    (26,25,1),
+    (25,17,1),
+    (14,17,1),
+    (23,13,1),
+    (8,5,1),
+    (4,24,1),
+    (2,21,1),
+    (11,3,1),
+    (16,23,1),
+    (6,26,1),
+    (5,29,1),
+    (12,5,1),
+    (23,27,1),
+    (26,14,1),
+    (2,5,1),
+    (24,28,1),
+    (16,24,1),
+    (25,26,1),
+    (17,25,1),
+    (17,14,1),
+    (13,23,1),
+    (5,8,1),
+    (24,4,1),
+    (21,2,1),
+    (3,11,1),
+    (23,16,1);
 
 
 insert into Location values 
@@ -977,7 +977,7 @@ INSERT INTO Schedule (schedule_id, sdate, startime, endtime) VALUES
     (3,"2018-09-25",'9:00','10:00'),
     (4,"2018-09-25",'11:00','13:00');
 
-insert into Note(nuid, place_id, nradius, nschedule, nvisibility, ncontent) values
+insert into Note(nuid, place_id, nradius, schedule_id, nvisibility, ncontent) values
     (14,'ChIJ4zGFAZpYwokRGUGph3Mf37k',1000,1,'private','Nice weather!'),
     (2,'ChIJ4zGFAZpYwokRGUGph3Mf37k',1000,1,'everyone','A big tree here!'),
     (27,'ChIJ4zGFAZpYwokRGUGph3Mf37k',1000,1,'friend','So many prople in Central Park!'),
@@ -1030,8 +1030,11 @@ insert into Tag(tagname) values ("Breakfast"),
                                 ("Dinner"),
                                 ("Brunch");
 
-insert into RepeatNote values (4, 2),
-                            (4, 3);
+insert into repeats (repeat_id, daynum) values (1, 2), (1,4);
+insert into repeatschedule (schedule_id, repeat_id) values (3,1);
+
+
+
 
 insert into NoteTag values
     (1,4),
@@ -1081,42 +1084,42 @@ insert into NoteTag values
     (45,4);
 
 
-insert into Filter(fuid, ftag, fstate, flati, flong, fradius, fdate, fstarttime, fendtime, fvisibility, fname) values 
-    (28,3,'Boring',40.7656501,-73.9574437,100,'2018-09-20 00:00:00','8:21:19','8:54:47','friend','Only for Working'),
-    (29,3,'Boring',40.7333691,-73.9902715,100,'2018-09-19 00:00:00','7:42:33','8:14:20','private','Only for Hanging out'),
-    (7,2,'Boring',40.7657594,-74.0046323,100,'2018-09-30 00:00:00','8:16:20','10:46:23','private','Only for Nothing'),
-    (4,4,'Boring',40.7358182,-73.9541469,1000,'2018-09-27 00:00:00','7:15:14','8:26:23','everyone','Only for Working'),
-    (23,1,'Boring',40.7106446,-74.0036919,2000,'2018-09-28 00:00:00','8:43:51','10:17:41','private','Only for Eating'),
-    (28,3,'Working',40.7605317,-73.9746485,10,'2018-09-26 00:00:00','8:26:32','11:02:22','everyone','Only for Eating'),
-    (22,4,'Hungry',40.6909034,-73.9968771,100,'2018-09-07 00:00:00','8:28:10','9:57:35','everyone','Only for Hanging out'),
-    (25,4,'Working',40.7072647,-73.9741446,2000,'2018-09-19 00:00:00','8:20:36','10:54:18','private','Only for Eating'),
-    (12,3,'Working',40.7391293,-74.0010989,2000,'2018-09-06 00:00:00','7:35:25','8:29:18','private','Only for Hanging out'),
-    (21,1,'Boring',40.7254469,-73.9689864,1000,'2018-09-22 00:00:00','7:14:35','9:24:30','friend','Only for Hanging out'),
-    (19,3,'Happy',40.7005801,-74.0110582,10,'2018-09-26 00:00:00','7:30:40','9:16:13','everyone','Only for Nothing'),
-    (23,3,'Hungry',40.707739,-74.0012306,100,'2018-09-23 00:00:00','7:46:07','9:15:25','friend','Only for Working'),
-    (3,1,'Working',40.7076563,-73.9779004,10,'2018-09-21 00:00:00','7:33:13','8:01:29','private','Only for Working'),
-    (26,2,'Working',40.7097389,-73.9756019,2000,'2018-09-15 00:00:00','7:25:00','9:28:30','everyone','Only for Hanging out'),
-    (19,1,'Working',40.7560021,-73.9870998,10,'2018-09-05 00:00:00','7:48:35','10:18:51','everyone','Only for Nothing'),
-    (16,4,'Boring',40.7525247,-73.966027,100,'2018-09-28 00:00:00','8:12:00','10:24:53','private','Only for Nothing'),
-    (3,4,'Hungry',40.7726209,-73.9970325,1000,'2018-09-14 00:00:00','8:09:29','9:33:38','private','Only for Working'),
-    (9,1,'Working',40.7390306,-73.9560506,2000,'2018-09-08 00:00:00','7:24:38','9:41:46','private','Only for Hanging out'),
-    (1,1,'Working',40.7870068,-73.9534362,2000,'2018-09-26 00:00:00','8:35:36','10:12:06','private','Only for Eating'),
-    (22,4,'Working',40.7645902,-74.0025733,1000,'2018-09-26 00:00:00','7:48:22','9:42:41','private','Only for Working'),
-    (20,1,'Happy',40.7828848,-73.9789756,2000,'2018-09-02 00:00:00','8:38:55','10:57:09','everyone','Only for Hanging out'),
-    (7,2,'Boring',40.7441527,-73.9727825,10,'2018-09-20 00:00:00','7:37:53','10:11:53','friend','Only for Working'),
-    (24,3,'Boring',40.7874679,-73.9571219,2000,'2018-09-17 00:00:00','7:48:33','9:57:59','everyone','Only for Eating'),
-    (26,3,'Working',40.7359666,-73.965999,100,'2018-09-14 00:00:00','7:15:29','7:59:09','friend','Only for Eating'),
-    (14,1,'Working',40.6884197,-73.9523571,10,'2018-09-20 00:00:00','8:32:22','10:51:07','friend','Only for Hanging out'),
-    (22,1,'Happy',40.731935,-73.9551301,2000,'2018-09-03 00:00:00','7:17:41','8:32:48','friend','Only for Hanging out'),
-    (7,1,'Happy',40.7753851,-73.9947792,1000,'2018-09-23 00:00:00','8:06:20','8:40:03','friend','Only for Eating'),
-    (11,4,'Happy',40.7612004,-73.9551972,1000,'2018-09-28 00:00:00','7:12:04','9:40:54','friend','Only for Hanging out'),
-    (29,4,'Happy',40.699559,-74.0108654,2000,'2018-09-02 00:00:00','8:16:00','9:55:26','private','Only for Eating'),
-    (28,3,'Boring',40.7719885,-73.9718493,2000,'2018-09-29 00:00:00','8:23:45','10:41:56','private','Only for Working'),
-    (23,3,'Hungry',40.7048563,-73.9604273,1000,'2018-09-26 00:00:00','8:15:21','9:58:59','everyone','Only for Working'),
-    (17,2,'Happy',40.6985623,-74.0068276,10,'2018-09-23 00:00:00','7:05:15','7:39:36','friend','Only for Nothing'),
-    (26,1,'Hungry',40.7561611,-73.9837537,1000,'2018-09-26 00:00:00','8:24:23','10:06:54','private','Only for Eating'),
-    (19,3,'Hungry',40.6899805,-73.9599338,100,'2018-09-30 00:00:00','8:43:22','11:05:08','friend','Only for Hanging out'),
-    (7,1,'Hungry',40.7822488,-73.9938043,2000,'2018-09-28 00:00:00','8:15:13','9:49:40','private','Only for Eating');
+insert into Filter(fuid, ftag, fstate, place_id, fradius, fdate, fstarttime, fendtime, fvisibility, fname) values 
+     (28,3,'Boring','ChIJna1sVURawokR7KKXO0RhaS4',100,'2018-09-20 00:00:00','8:21:19','8:54:47','friend','Only for Working'),
+    (29,3,'Boring','ChIJRzzoh_VZwokRdXF0AL5vPvA',100,'2018-09-19 00:00:00','7:42:33','8:14:20','private','Only for Hanging out'),
+    (7,2,'Boring','ChIJ06nHSrNbwokR1tKMiNmG2SU',100,'2018-09-30 00:00:00','8:16:20','10:46:23','private','Only for Nothing'),
+    (4,4,'Boring','ChIJl3LSeqNZwokRYlGJkbotrW4',1000,'2018-09-27 00:00:00','7:15:14','8:26:23','everyone','Only for Working'),
+    (23,1,'Boring','ChIJLYgHV0hawokR2-ZdvxaMGxE',2000,'2018-09-28 00:00:00','8:43:51','10:17:41','private','Only for Eating'),
+    (28,3,'Working','ChIJAYhbcB1ZwokRm5l-9P48BeI',10,'2018-09-26 00:00:00','8:26:32','11:02:22','everyone','Only for Eating'),
+    (22,4,'Hungry','ChIJi52GIZhZwokRcs4fUO8yM4Y',100,'2018-09-07 00:00:00','8:28:10','9:57:35','everyone','Only for Hanging out'),
+    (25,4,'Working','ChIJuV6DJ05awokRHLmEL788NvU',2000,'2018-09-19 00:00:00','8:20:36','10:54:18','private','Only for Eating'),
+    (12,3,'Working','ChIJ6TfFfbRbwokRN3sV5_r4k8w',2000,'2018-09-06 00:00:00','7:35:25','8:29:18','private','Only for Hanging out'),
+    (21,1,'Boring','ChIJAV3st4pZwokR6M7zzHTcMV0',1000,'2018-09-22 00:00:00','7:14:35','9:24:30','friend','Only for Hanging out'),
+    (19,3,'Happy','ChIJ_U_NR69ZwokRkOaA92AjJ4U',10,'2018-09-26 00:00:00','7:30:40','9:16:13','everyone','Only for Nothing'),
+    (23,3,'Hungry','ChIJQwOryBhawokR088h1U7eJJo',100,'2018-09-23 00:00:00','7:46:07','9:15:25','friend','Only for Working'),
+    (3,1,'Working','ChIJgRMMljNawokRr9JHy_x6tNE',10,'2018-09-21 00:00:00','7:33:13','8:01:29','private','Only for Working'),
+    (26,2,'Working','ChIJuf49BRZawokRGtrx1WRGl6Y',2000,'2018-09-15 00:00:00','7:25:00','9:28:30','everyone','Only for Hanging out'),
+    (19,1,'Working','ChIJEVzKxrJZwokR9P9raTunFws',10,'2018-09-05 00:00:00','7:48:35','10:18:51','everyone','Only for Nothing'),
+    (16,4,'Boring','ChIJuWO59FZYwokRDbvnB6y8iBg',100,'2018-09-28 00:00:00','8:12:00','10:24:53','private','Only for Nothing'),
+    (3,4,'Hungry','ChIJjUw7LxJawokRByGsMS3I1Xc',1000,'2018-09-14 00:00:00','8:09:29','9:33:38','private','Only for Working'),
+    (9,1,'Working','ChIJ2YlsXkpawokRIwyvufNmcvw',2000,'2018-09-08 00:00:00','7:24:38','9:41:46','private','Only for Hanging out'),
+    (1,1,'Working','ChIJt00J2J5ZwokRES8sOBk5MMQ',2000,'2018-09-26 00:00:00','8:35:36','10:12:06','private','Only for Eating'),
+    (22,4,'Working','ChIJa6Ujwk9awokR68IDa4-y7HE',1000,'2018-09-26 00:00:00','7:48:22','9:42:41','private','Only for Working'),
+    (20,1,'Happy','0',2000,'2018-09-02 00:00:00','8:38:55','10:57:09','everyone','Only for Hanging out'),
+    (7,2,'Boring','ChIJO2RHbEpawokR08P1CewooO0',10,'2018-09-20 00:00:00','7:37:53','10:11:53','friend','Only for Working'),
+    (24,3,'Boring','ChIJGZ9uQpBZwokRPO8QVoisQPQ',2000,'2018-09-17 00:00:00','7:48:33','9:57:59','everyone','Only for Eating'),
+    (26,3,'Working','ChIJpQ_bA5pZwokR8d0QzoqvBcQ',100,'2018-09-14 00:00:00','7:15:29','7:59:09','friend','Only for Eating'),
+    (14,1,'Working','ChIJmXqlF0lawokR62IiBJNclOA',10,'2018-09-20 00:00:00','8:32:22','10:51:07','friend','Only for Hanging out'),
+    (22,1,'Happy','ChIJobperrRbwokRxISWsWXIvZE',2000,'2018-09-03 00:00:00','7:17:41','8:32:48','friend','Only for Hanging out'),
+    (7,1,'Happy','ChIJnZMMbqpZwokR24YkG4iAQUo',1000,'2018-09-23 00:00:00','8:06:20','8:40:03','friend','Only for Eating'),
+    (11,4,'Happy','0',1000,'2018-09-28 00:00:00','7:12:04','9:40:54','friend','Only for Hanging out'),
+    (29,4,'Happy','ChIJFTRdephYwokRGXe8eQyk2E0',2000,'2018-09-02 00:00:00','8:16:00','9:55:26','private','Only for Eating'),
+    (28,3,'Boring','ChIJ0aKtpAFZwokRoNHcPbo9Na8',2000,'2018-09-29 00:00:00','8:23:45','10:41:56','private','Only for Working'),
+    (23,3,'Hungry','ChIJl0rtoARZwokR1lOpx6Om3d4',1000,'2018-09-26 00:00:00','8:15:21','9:58:59','everyone','Only for Working'),
+    (17,2,'Happy','ChIJq3tH0I5YwokRfL6Y8j8E6DM',10,'2018-09-23 00:00:00','7:05:15','7:39:36','friend','Only for Nothing'),
+    (26,1,'Hungry','ChIJQ8wDlCZawokRNw8gV7Hooa0',1000,'2018-09-26 00:00:00','8:24:23','10:06:54','private','Only for Eating'),
+    (19,3,'Hungry','ChIJ5TSt0jNawokRITB7vWiHEpU',100,'2018-09-30 00:00:00','8:43:22','11:05:08','friend','Only for Hanging out'),
+    (7,1,'Hungry','ChIJn6HFQ0xawokRXMlJK1gBZD8',2000,'2018-09-28 00:00:00','8:15:13','9:49:40','private','Only for Eating');
 
 
 

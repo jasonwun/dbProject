@@ -19,27 +19,28 @@ create table Users (uid integer AUTO_INCREMENT PRIMARY KEY,
 drop table if exists Friendship;
 create table Friendship (user1 integer,
                          user2 integer,
+                         status integer,
 						primary key(user1, user2),
                         FOREIGN KEY (user1) REFERENCES Users(uid) on DELETE CASCADE,
                         foreign key (user2) references Users(uid) on delete CASCADE);
 
 drop table if exists Schedules;
-create table Schedules(schedule_id integer AUTO_INCREMENT Primary Key,
+create table Schedule(schedule_id integer AUTO_INCREMENT Primary Key,
 						sdate date,
 						startime time,
 						endtime time
 						);
 
 drop table if exists Repeats;
-create table Repeats (repeat_id integer Primary key AUTO_INCREMENT,
+create table Repeats (repeat_id integer,
                     daynum integer,
-										period integer);
+                    primary key(repeat_id, daynum));
 
 drop table if exists RepeatSchedule;
 Create table RepeatSchedule(schedule_id integer,
 							repeat_id integer,
 							primary key (schedule_id, repeat_id),
-							foreign key (schedule_id) references Schedules(schedule_id) on DELETE cascade,
+							foreign key (schedule_id) references Schedule(schedule_id) on DELETE cascade,
 							foreign key (repeat_id) references Repeats(repeat_id) on DELETE cascade);
 
 drop table if exists Note;
@@ -51,13 +52,8 @@ create table Note (nid integer AUTO_INCREMENT primary key,
                    nvisibility varchar(10),
                    ncontent varchar(255),
                    FOREIGN key (nuid) REFERENCES Users(uid) on delete CASCADE,
-									 Foreign key (schedule_id) references Schedules(schedule_id) on delete CASCADE
+									 Foreign key (schedule_id) references Schedule(schedule_id) on delete CASCADE,
                    FOREIGN key (place_id) REFERENCES Location(place_id) on delete CASCADE);
-
-drop table if exists RepeatNote;
-create table RepeatNote (nid integer,
-                         daynum integer,
-                         foreign key (nid) references Note(nid) on DELETE cascade);
 
 drop table if exists Comment;
 create table Comment (uid integer,
@@ -81,14 +77,14 @@ create table NoteTag (nid integer,
 drop table if exists Filter;
 create table Filter(fid integer AUTO_INCREMENT primary key,
                     fuid integer,
-                    ftag integer null,
-                    fstate varchar(50) null,
-                    flati double null,
-                    flong double null,
-                    fradius integer null,
-                    fdate date null,
-                    fstarttime time null,
-                    fendtime time null,
+                    ftag integer,
+                    fstate varchar(50),
+                    place_id varchar(255),
+                    fradius integer,
+                    fdate date,
+                    fstarttime time,
+                    fendtime time,
                     fvisibility varchar(10),
+                    fname varchar(50),
                     foreign key (fuid) references Users(uid) on delete cascade,
                     foreign key (ftag) references Tag(tid) on delete cascade);

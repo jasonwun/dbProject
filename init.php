@@ -21,19 +21,36 @@
     }
  </style>
   </head>
-  
+
+  <?php
+  session_start();
+  /*echo $_SESSION['username'];*/
+  ?>
   <body style="margin:0px; padding:0px;" onload="initMap()">
-    
+
     <div id="map" style="width: 50%; height: 100%; float:left"></div>
-    <div id="LoginForm">
+
+    <!-- <div id="LoginForm">
       <label>UserName:</label>
       <input type="text" id="usernameInput" size="15"/>
       <label>Password:</label>
       <input type="text" id="passwordInput" size="15"/>
-      <input type="button" id="loginbutton" value="Login"/>
+      <br>
+      <input type="button" id="loginbutton" value="Login"/><br>
+      <a href='signup.php' style="text-decoration: none;"> <input type="button" id='signupButton' value="Sign up"/> </a>
+      <br>
       <label id="loginstatus" style="color:Red; display:none" >UserName/Password combination is not correct</label>
     </div>
-    <label id="UserName" for="displayUserName" style="display:none"></label>
+    <label id="UserName" for="displayUserName" style="display:none"></label> -->
+    <br>
+    <div>
+        <form method="post" action="friend_request.php">
+          <tr>
+            <input name="friendName" type="input"/> <input type="submit" value="Add Friends" name="AddFriend" />
+          </tr>
+        </form>
+    </div>
+    <br>
     <div id="loctimediv">
           <label >Time Selector</label>
           <input type="datetime-local" name="userDate" id="usercurrenttime"/>
@@ -53,7 +70,7 @@
     <div>
         <input type="button" id="addNote" value="Add new Note"/>
     </div>
-    
+
 
     <script>
       var user = {
@@ -75,7 +92,7 @@
       var infoWindow;
       var locationSelect;
       var usermarker = null;
-      
+
 
         function initMap() {
           var loca = {lat: 40.739217, lng: -73.9754976};
@@ -112,7 +129,7 @@
         }
 
 
-        
+
 
         function handleEvent(event) {
             document.getElementById('lat').value = event.latLng.lat();
@@ -222,12 +239,13 @@
             else{
               var status = document.getElementById("loginstatus");
               status.style.display = "inline";
-            }  
+            }
           };
 
           request.open('GET', url, true);
           request.send(null);
         }
+
 
        function searchLocations() {
          var address = document.getElementById("addressInput").value;
@@ -275,9 +293,9 @@
                   parseFloat(markerNodes[i].getAttribute("lng")));
 
              createOption(name, distance, i);
-             
+
            }
-           
+
            locationSelect.style.visibility = "visible";
            locationSelect.onchange = function() {
              var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
@@ -339,6 +357,6 @@
   var my_key = config.MY_KEY;
   document.write('<script async defer src="https://maps.googleapis.com/maps/api/js?key=' + my_key + '&callback=initMap"><' + '/script>');
   </script>
-  
+
   </body>
 </html>

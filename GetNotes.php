@@ -30,7 +30,7 @@ natural join location
 join Users on fuid = uid
 join tag on tid = ftag
 left join Friendship on fuid = user1
-where fuid = %s;", $uid);
+where fuid = %d;", $uid);
 
 $pdo->query($createAllFilterquery);
 
@@ -47,11 +47,6 @@ And ((ftag = tid and ustate = fstate) Or (ftag=tid and fstate = null) Or (ftag=n
 And ((fvisibility= 'everyone' And (nvisibility='everyone' Or (nvisibility = 'friend' And nuid=user2) Or (nvisibility = 'private' And nuid=fuid)))
 Or (fvisibility='friend' And nuid=user2 And (nvisibility= 'everyone' Or nvisibility= 'friend')));";
 $result = $pdo->query($finalquery);
-
-if($result->rowCount() == 0){
-    header("HTTP/1.0 404 Not Found");
-    exit();
-}
 
 
 header("Content-type: text/xml");

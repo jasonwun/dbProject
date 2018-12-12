@@ -15,10 +15,6 @@ $uid);
 
 $result = $pdo->query($query);
 
-if($result->rowCount() == 0){
-    header("HTTP/1.0 404 Not Found");
-    exit();
-}
 
 header("Content-type: text/xml");
 // Iterate through the rows, adding XML nodes for each

@@ -105,6 +105,7 @@
           map.addListener('click',function(event) {
             if(usermarker.getPosition() != null){
               usermarker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
+              UpdateUserProfile(usermarker.getPosition().lat(),usermarker.getPosition().lng());
               UpdateMapMarkerView();
             }
           });
@@ -112,6 +113,7 @@
           usermarker.addListener('dragend', function(event){
             var lat = usermarker.getPosition().lat();
             var lng = usermarker.getPosition().lng();
+            UpdateUserProfile(lat,lng);
             UpdateMapMarkerView();
           });
 
@@ -125,6 +127,12 @@
           GetFilters();
         }
 
+        function UpdateUserProfile(lat, lng){
+          var url = "UpdateUser.php?lat=" + lat + "&lng=" + lng;
+          downloadUrl(url,function(data){
+
+          });
+        }
 
 
 

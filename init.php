@@ -96,7 +96,10 @@
        
     </div>
     <div>
-        <input type="button" id="addNote" value="Add new Note"/>
+        <form action="AddNote.php" method="post">
+        <input type="submit" id="addNote" value="Add new Note"/>
+        </form>
+        
     </div>
 
     <div id="commentdiv" style="margin-top:20px">

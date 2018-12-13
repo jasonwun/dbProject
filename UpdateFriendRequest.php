@@ -21,4 +21,3 @@ else{//Deny request, drop the current relationship
 header("location:init.php");
 
 ?>
-

@@ -61,9 +61,14 @@
           <label id="timeupdatestatus">The datetime value should not be earliear than 2018-09-25 00:00:00</label>
     </div>
     <div>
+    <form method="post" action="UpdateTime.php" style="margin-top : 15px">
         <input type="range" name="timeEnter" min="0" max="1440" step="1" value = "60"
               oninput="showVal(this.value)" onchange="showVal(this.value)"><br>
         <span id="valBox">1:00</span>
+        <input type="hidden" name="t_string" id="t_input"/>
+        <input type=submit name="updateTime" value="Update Time"/>
+      </form>
+
     </div>
 
 
@@ -88,9 +93,10 @@
           return time;
       }
       function showVal(newVal){
-          var reuslt = IntToTime(newVal);
-
-          document.getElementById("valBox").innerHTML=reuslt;}
+          var result = IntToTime(newVal);
+          var time_pass = "2018-12-12"+ ' ' +result +':00'
+          document.getElementById("t_input").value=time_pass;
+          document.getElementById("valBox").innerHTML=result;}
     </script>
 
     <script>
@@ -159,6 +165,13 @@
           });
         }
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 781b48daccc661f79efb1651d369bc0fc312c671
         function handleEvent(event) {
             document.getElementById('lat').value = event.latLng.lat();
             document.getElementById('lng').value = event.latLng.lng();

@@ -32,7 +32,7 @@
   $ustate = $_SESSION['ustate'];
   ?>
   <body style="margin:0px; padding:0px;">
-    
+
     <div id="map" style="width: 50%; height: 100%; float:left"></div>
 
     <div>
@@ -53,6 +53,12 @@
           <input type="button" value="update" id="updateusercurrenttime"/>
           <label id="timeupdatestatus">The datetime value should not be earliear than 2018-09-25 00:00:00</label>
     </div>
+    <div>
+        <input type="range" name="timeEnter" min="0" max="1440" step="1" value = "60"
+              oninput="showVal(this.value)" onchange="showVal(this.value)"><br>
+        <span id="valBox">1:00</span>
+    </div>
+
 
     <div id="filterdiv">
         <label id="ExistFiltersNum"></label>
@@ -67,6 +73,18 @@
         <input type="button" id="addNote" value="Add new Note"/>
     </div>
 
+    <script>
+      function IntToTime(val){
+          var hours = parseInt( val / 60 );
+          var min = val - (hours * 60);
+          var time = hours + ':' + (min < 10 ? '0' + min : min);
+          return time;
+      }
+      function showVal(newVal){
+          var reuslt = IntToTime(newVal);
+
+          document.getElementById("valBox").innerHTML=reuslt;}
+    </script>
 
     <script>
 
@@ -147,7 +165,7 @@
             downloadUrl(url, function(data){
               var xml = parseXml(data);
               var NotesNodes = xml.documentElement.getElementsByTagName("Note");
-              
+
               for(var i = 0; i < NotesNodes.length; i++){
                   var nid = NotesNodes[i].getAttribute("nid");
                   var place_name = NotesNodes[i].getAttribute("place_name");
@@ -236,7 +254,7 @@
 
        function doNothing() {}
   </script>
-  
+
   <script type='text/javascript' src='config.js' ></script>
   <script>
   var my_key = config.MY_KEY;

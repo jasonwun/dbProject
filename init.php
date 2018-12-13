@@ -32,7 +32,7 @@
   $utime = $_SESSION['utime'];
   $ustate = $_SESSION['ustate'];
   ?>
-  <body style="margin:0px; padding:0px;">
+  <body style="margin:0px; padding:0px;" onload="initMap()">
 
     <div id="map" style="width: 50%; height: 100%; float:left"></div>
 
@@ -128,11 +128,9 @@
 
 
           map.addListener('click',function(event) {
-            if(usermarker.getPosition() != null){
               usermarker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
               UpdateUserProfile(usermarker.getPosition().lat(),usermarker.getPosition().lng());
               UpdateMapMarkerView();
-            }
           });
 
           usermarker.addListener('dragend', function(event){
@@ -151,6 +149,7 @@
 
           GetFilters();
           GetFriends();
+          UpdateMapMarkerView();
         }
 
         function UpdateUserProfile(lat, lng){
@@ -159,10 +158,6 @@
 
           });
         }
-
-        
-
-
 
         function handleEvent(event) {
             document.getElementById('lat').value = event.latLng.lat();
@@ -195,6 +190,8 @@
         if(infoWindow){
           infoWindow.close();
         }
+        usermarker.setMap(null);
+        usermarker.setMap(map);
         for (var i = 0; i < markers.length; i++) {
            markers[i].setMap(null);
          }
@@ -239,8 +236,8 @@
                   var cell2 = row.insertCell(1);
                   var cell3 = row.insertCell(2);
                   cell1.innerHTML = name;
-                  cell2.innerHTML = "<a href=editFilter.php?fid=" + id + ">Edit this Filter</a>";
-                  cell3.innerHTML = "<a href=deleteFilter.php?id=" + id + ">Delete this Filter</a>";
+                  cell2.innerHTML = "<a href=EditFilter.php?fid=" + id + ">Edit this Filter</a>";
+                  cell3.innerHTML = "<a href=DeleteFilter.php?fid=" + id + ">Delete this Filter</a>";
               }
             });
         }
@@ -285,16 +282,19 @@
           }
        }
 
-       function doNothing() {}
+       function doNothing() {
+        
+       }
   </script>
 
   <script type='text/javascript' src='config.js' ></script>
   <script>
   var my_key = config.MY_KEY;
-  document.write('<script async defer src="https://maps.googleapis.com/maps/api/js?key=' + my_key + '&callback=initMap"><' + '/script>');
+  
+  document.write('<script async defer src="https://maps.googleapis.com/maps/api/js?key=' + my_key + '"><' + '/script>');
   </script>
   <script >
-        UpdateMapMarkerView();
+        
   </script>
   </body>
 </html>

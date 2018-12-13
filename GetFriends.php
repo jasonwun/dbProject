@@ -10,9 +10,9 @@ $node = $dom->createElement("friend");
 $parnode = $dom->appendChild($node);
 
 $query = sprintf("
-(select uid, username from friendship join users on friendship.user2 = uid where user1 = %d)
+(select uid, username, status from friendship join users on friendship.user2 = uid where user1 = %d)
 union
-(select u1.uid, u1.username from friendship join users u1 on user1 = u1.uid join users u2 on user2 = u2.uid where user2 = %d and status = 0)
+(select u1.uid, u1.username, status from friendship join users u1 on user1 = u1.uid join users u2 on user2 = u2.uid where user2 = %d and status = 0)
 ", $uid, $uid);
 $result = $pdo->query($query);
 

@@ -27,8 +27,19 @@
   session_start();
   $username =  $_SESSION['username'];
   $uid = $_SESSION['uid'];
-  $ulat = $_SESSION['ulat'];
-  $ulng = $_SESSION['ulng'];
+  if($_SESSION['ulat'] != NULL){
+      $ulat = $_SESSION['ulat'];
+  }
+  else{
+      $ulat = 40.739217;
+  }
+  if($_SESSION['ulng'] != NULL){
+      $ulng = $_SESSION['ulng'];  }
+  else{
+      $ulng = -73.9754976;
+  }    
+  
+  
   $utime = $_SESSION['utime'];
   $ustate = $_SESSION['ustate'];
   ?>
@@ -148,7 +159,7 @@
             UpdateUserProfile(lat,lng);
             UpdateMapMarkerView();
           });
-
+          
           var latlng = new google.maps.LatLng(<?php echo $ulat;?>, <?php echo $ulng;?>);
 
           usermarker.setPosition(latlng);

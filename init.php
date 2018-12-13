@@ -40,7 +40,13 @@
     </div>
     <br>
     <div>
-        <form method="post" action="friend_request.php">
+        <label>Your Friends</label>
+        <table id="FriendsTable" border='3'>
+          <tr>
+              <th>Friends</th>
+          </tr>
+        </table>
+        <form method="post" action="friend_request.php" style="margin-top : 15px">
           <tr>
             <input name="friendName" type="input"/> <input type="submit" value="Add Friends" name="AddFriend" />
           </tr>
@@ -125,7 +131,12 @@
           map.fitBounds(bounds);
 
           GetFilters();
+          GetFriends();
         }
+
+        // function Reload(){
+        //   window.location.reload(false); 
+        // }
 
         function UpdateUserProfile(lat, lng){
           var url = "UpdateUser.php?lat=" + lat + "&lng=" + lng;
@@ -133,6 +144,8 @@
 
           });
         }
+
+        
 
 
 
@@ -172,6 +185,29 @@
          }
          markers.length = 0;
       }
+
+      function GetFriends(){
+          var url = "GetFriends.php";
+          downloadUrl(url, function(data){
+              var xml = parseXml(data);
+              var friendsNodes = xml.documentElement.getElementsByTagName("friend");
+              var table = document.getElementById("FriendsTable");
+              for(var i = 0; i < friendsNodes.length; i++){
+                  var id = friendsNodes[i].getAttribute("id");
+                  var name = friendsNodes[i].getAttribute("name");
+                  var status = friendsNodes[i].getAttribute("status");
+                  var row = table.insertRow(1);
+                  var cell1 = row.insertCell(0);
+                  cell1.innerHTML = name;
+                  if(status == 0){
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell2.innerHTML = "<a href=UpdateFriendRequest.php?id=" + id + ">Approve</a>";
+                    cell3.innerHTML = "<a href=UpdateFriendRequest.php?id=" + id + ">Deny</a>";
+                  }
+              }
+          });
+        }
 
         function GetFilters(){
             url = "getAllFilters.php?uid=" + <?php echo $uid?>;

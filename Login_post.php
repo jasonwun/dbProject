@@ -7,7 +7,7 @@ session_start();
 $username=($_POST['username']);
 $password=($_POST['password']);
 
-$query = sprintf("SELECT * FROM Users WHERE username='$username' and password='$password'");
+$query = sprintf("SELECT * FROM users WHERE username='$username' and password='$password'");
 $result=$pdo->query($query);
 
 

@@ -152,10 +152,6 @@
           GetFriends();
         }
 
-        // function Reload(){
-        //   window.location.reload(false); 
-        // }
-
         function UpdateUserProfile(lat, lng){
           var url = "UpdateUser.php?lat=" + lat + "&lng=" + lng;
           downloadUrl(url,function(data){
@@ -220,8 +216,8 @@
                   if(status == 0){
                     var cell2 = row.insertCell(1);
                     var cell3 = row.insertCell(2);
-                    cell2.innerHTML = "<a href=UpdateFriendRequest.php?id=" + id + ">Approve</a>";
-                    cell3.innerHTML = "<a href=UpdateFriendRequest.php?id=" + id + ">Deny</a>";
+                    cell2.innerHTML = "<a href=UpdateFriendRequest.php?id=" + id + "&action=0>Approve</a>";
+                    cell3.innerHTML = "<a href=UpdateFriendRequest.php?id=" + id + "&action=1>Deny</a>";
                   }
               }
           });

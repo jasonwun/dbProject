@@ -99,6 +99,21 @@
         <input type="button" id="addNote" value="Add new Note"/>
     </div>
 
+    <div id="commentdiv" style="margin-top:20px">
+        <table id="commentTable" border="3">
+          <tr>
+            <th>Create Time</th>
+            <th>User Name</th>
+            <th>Content</th>
+          </tr>
+        </table>
+        <form method="post" action="AddComment.php">
+            <input type="text" name="commentcontent"/>
+            <input type="hidden" name="nid" id="hiddennid"/>
+            <input type="submit" name="addcomment" value="Create Comment"/> 
+        </form>
+    </div>
+
     <script>
       function IntToTime(val){
           var hours = parseInt( val / 60 );
@@ -127,6 +142,7 @@
       var locationSelect;
       var usermarker = null;
       var bounds;
+      var commentCount = 0;
 
 
         function initMap() {
@@ -203,10 +219,13 @@
                   var latlng = new google.maps.LatLng(
                   parseFloat(NotesNodes[i].getAttribute("lat")),
                   parseFloat(NotesNodes[i].getAttribute("lng")));
-                  createMarker(latlng, place_name, ncontent);
+                  createMarker(latlng, nid, place_name, ncontent);
                   bounds.extend(latlng);
               }
-              map.fitBounds(bounds);
+              if(NotesNodes.length > 0){
+                map.fitBounds(bounds);
+              }
+              
             });
       }
 
@@ -266,7 +285,28 @@
             });
         }
 
-       function createMarker(latlng, name, address) {
+        function GetComment(nid){
+          var url = "GetComment.php?nid="+nid;
+          downloadUrl(url, function(data){
+            var xml = parseXml(data);
+              var commentNodes = xml.documentElement.getElementsByTagName("comment");
+              var table = document.getElementById("commentTable");
+              commentCount = commentNodes.length;
+              for(var i=0;i < commentNodes.length; i++){
+                var content = commentNodes[i].getAttribute("content")
+                var time = commentNodes[i].getAttribute("createtime");
+                var username = commentNodes[i].getAttribute("username");
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                cell1.innerHTML = time;
+                cell2.innerHTML = username;
+                cell3.innerHTML = content;
+          }});
+        }
+
+       function createMarker(latlng, nid, name, address) {
           var html = "<b>" + name + "</b> <br/>" + address;
           var marker = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
@@ -276,8 +316,20 @@
           google.maps.event.addListener(marker, 'click', function() {
             infoWindow.setContent(html);
             infoWindow.open(map, marker);
+            clearComments();
+            GetComment(nid);
+            document.getElementById("hiddennid").value = nid;
+
           });
           markers.push(marker);
+        }
+
+        function clearComments(){
+          var table = document.getElementById("commentTable");
+          for( var i = 1; i < commentCount + 1; i++){
+            table.deleteRow(1);
+          }
+          commentCount = 0;
         }
 
        function downloadUrl(url, callback) {

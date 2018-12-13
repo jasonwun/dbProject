@@ -11,7 +11,7 @@ $parnode = $dom->appendChild($node);
 
 $query = sprintf("
 select * from friendship join users on friendship.user2 = uid where user1 = %d
-union 
+union
 select * from friendship join users on friendship.user2 = uid where user2 = %d and status = 0
 ", $uid, $uid);
 $result = $pdo->query($query);

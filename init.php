@@ -1,4 +1,5 @@
 <!DOCTYPE html >
+<html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -190,7 +191,7 @@
                   createMarker(latlng, place_name, ncontent);
                   bounds.extend(latlng);
               }
-              map.fitBounds(bounds)
+              map.fitBounds(bounds);
             });
       }
 

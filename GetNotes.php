@@ -5,42 +5,42 @@ $uid = $_GET["uid"];
 
 $dom = new DOMDocument("1.0");
 
-$node = $dom->createElement("Note");
+$node = $dom->createElement("Notes");
 $parnode = $dom->appendChild($node);
 
 $pdo = pdo_connect();
 
 $createAllNotequery = "
-create temporary table AllNote 
-select nid, nuid, place_name, address, lat, lng, nradius, nvisibility, ncontent, sdate,startime, endtime, daynum, tagname from Note 
+create temporary table allnote 
+select nid, nuid, place_name, address, lat, lng, nradius, nvisibility, ncontent, sdate,startime, endtime, daynum, tagname from note 
 natural join location 
 natural join schedule
 natural join notetag 
 natural join tag 
-left join repeatschedule on repeatschedule.schedule_id = Note.schedule_id
+left join repeatschedule on repeatschedule.schedule_id = note.schedule_id
 left join repeats on repeatschedule.repeat_id = repeats.repeat_id;";
 
 $pdo->query($createAllNotequery);
 
 $createAllFilterquery = sprintf("
-create TEMPORARY table AllFilter
+create TEMPORARY table allfilter
 select fid, ftag, fuid, tagname, fstate, lat,lng, ulatt, ulong, fradius, fdate, fstarttime, fendtime, utime, fvisibility, fname, ustate, tid,user2
 from filter
 natural join location
-join Users on fuid = uid
+join users on fuid = uid
 join tag on tid = ftag
-left join Friendship on fuid = user1
+left join friendship on fuid = user1
 where fuid = %d;", $uid);
 
 $pdo->query($createAllFilterquery);
 
 
 $finalquery = "
-select distinct AllNote.nid, nuid, place_name, ncontent, AllNote.lat lat, AllNote.lng lng, ftag, tid, ustate, fstate, nvisibility, fvisibility
-from AllNote
-join AllFilter
-where mydistance(ulatt, ulong, AllFilter.lat, AllFilter.lng) <= fradius
-and mydistance(ulatt,ulong, AllNote.lat, AllFilter.lng) <= nradius
+select distinct allnote.nid, nuid, place_name, ncontent, allnote.lat lat, allnote.lng lng, ftag, tid, ustate, fstate, nvisibility, fvisibility
+from allnote
+join allfilter
+where mydistance(ulatt, ulong, allfilter.lat, allfilter.lng) <= fradius
+and mydistance(ulatt,ulong, allnote.lat, allfilter.lng) <= nradius
 And Date(utime) = fdate And time(utime) between fstarttime And fendtime
 And (Date(utime) = sdate or dayofweek(utime) = daynum)
 And ((ftag = tid and ustate = fstate) Or (ftag=tid and fstate = null) Or (ftag=null And fstate=null) Or (ftag = null And fstate=ustate))

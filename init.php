@@ -250,7 +250,7 @@
                   var cell3 = row.insertCell(2);
                   cell1.innerHTML = name;
                   cell2.innerHTML = "<a href=EditFilterDetail.php?fid=" + id + ">Edit this Filter</a>";
-                  cell3.innerHTML = "<a href=DeleteFilter.php?fid=" + id + ">Delete this Filter</a>";
+                  cell3.innerHTML = "<a href=deleteFilter.php?fid=" + id + ">Delete this Filter</a>";
               }
             });
         }

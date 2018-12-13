@@ -79,7 +79,10 @@
               <th>FilterName</th>
           </tr>
         </table>
-        <input type="button" id="addFilter" value="Add new filter"/>
+        <form action="AddFilterPost.php" method="post">
+            <input type="button" id="addFilter" value="Add new filter"/>
+        </form>
+       
     </div>
     <div>
         <input type="button" id="addNote" value="Add new Note"/>
@@ -165,13 +168,10 @@
           });
         }
 
-<<<<<<< HEAD
-=======
 
 
 
 
->>>>>>> 781b48daccc661f79efb1651d369bc0fc312c671
         function handleEvent(event) {
             document.getElementById('lat').value = event.latLng.lat();
             document.getElementById('lng').value = event.latLng.lng();
@@ -249,7 +249,7 @@
                   var cell2 = row.insertCell(1);
                   var cell3 = row.insertCell(2);
                   cell1.innerHTML = name;
-                  cell2.innerHTML = "<a href=EditFilter.php?fid=" + id + ">Edit this Filter</a>";
+                  cell2.innerHTML = "<a href=EditFilterDetail.php?fid=" + id + ">Edit this Filter</a>";
                   cell3.innerHTML = "<a href=DeleteFilter.php?fid=" + id + ">Delete this Filter</a>";
               }
             });

@@ -32,16 +32,11 @@ create table Schedule(schedule_id integer AUTO_INCREMENT Primary Key,
 						);
 
 drop table if exists Repeats;
-create table Repeats (repeat_id integer,
+create table Repeats (schedule_id integer,
                     daynum integer,
-                    primary key(repeat_id, daynum));
+                    primary key(schedule_id, daynum),
+                    foreign key (schedule_id) references Schedule(schedule_id) on DELETE cascade);
 
-drop table if exists RepeatSchedule;
-Create table RepeatSchedule(schedule_id integer,
-							repeat_id integer,
-							primary key (schedule_id, repeat_id),
-							foreign key (schedule_id) references Schedule(schedule_id) on DELETE cascade,
-							foreign key (repeat_id) references Repeats(repeat_id) on DELETE cascade);
 
 drop table if exists Note;
 create table Note (nid integer AUTO_INCREMENT primary key,

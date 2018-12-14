@@ -1039,10 +1039,9 @@ insert into Tag(tagname) values ("Breakfast"),
                                 ("Dinner"),
                                 ("Brunch");
 
-insert into repeats (repeat_id, daynum) values 
-                                        (1,2),
-    (1,5);
-insert into repeatschedule (schedule_id, repeat_id) values (3,1);
+insert into repeats (schedule_id, daynum) values 
+                                        (3,2),
+    (3,5);
 
 
 

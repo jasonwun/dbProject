@@ -25,6 +25,50 @@ $stmt1->bindParam(':endtime', $nendtime);
 $stmt1->execute(); 
 $last_schedule = $pdo->lastInsertId();
 
+if(isset($_POST["mon"])){
+    $stmt_repeat = $pdo->prepare("INSERT INOT `repeats` (schedule_id, daynum) 
+                    VALUES (:schedule_id , 1) ");
+    $stmt_repeat->bindParam(':schedule_id', $last_schedule);
+    $stmt_repeat->execute();
+}
+if(isset($_POST["tue"])){
+    $stmt_repeat = $pdo->prepare("INSERT INOT `repeats` (schedule_id, daynum) 
+                    VALUES (:schedule_id , 2) ");
+    $stmt_repeat->bindParam(':schedule_id', $last_schedule);
+    $stmt_repeat->execute();
+}
+if(isset($_POST["wed"])){
+    $stmt_repeat = $pdo->prepare("INSERT INOT `repeats` (schedule_id, daynum) 
+                    VALUES (:schedule_id , 3) ");
+    $stmt_repeat->bindParam(':schedule_id', $last_schedule);
+    $stmt_repeat->execute();
+}
+if(isset($_POST["thu"])){
+    $stmt_repeat = $pdo->prepare("INSERT INOT `repeats` (schedule_id, daynum) 
+                    VALUES (:schedule_id , 4) ");
+    $stmt_repeat->bindParam(':schedule_id', $last_schedule);
+    $stmt_repeat->execute();
+}
+if(isset($_POST["fri"])){
+    $stmt_repeat = $pdo->prepare("INSERT INOT `repeats` (schedule_id, daynum) 
+                    VALUES (:schedule_id , 5) ");
+    $stmt_repeat->bindParam(':schedule_id', $last_schedule);
+    $stmt_repeat->execute();
+}
+if(isset($_POST["sat"])){
+    $stmt_repeat = $pdo->prepare("INSERT INOT `repeats` (schedule_id, daynum) 
+                    VALUES (:schedule_id , 6) ");
+    $stmt_repeat->bindParam(':schedule_id', $last_schedule);
+    $stmt_repeat->execute();
+}
+if(isset($_POST["sun"])){
+    $stmt_repeat = $pdo->prepare("INSERT INOT `repeats` (schedule_id, daynum) 
+                    VALUES (:schedule_id , 7) ");
+    $stmt_repeat->bindParam(':schedule_id', $last_schedule);
+    $stmt_repeat->execute();
+}
+
+
 
 $stmt = $pdo->prepare("INSERT INTO `note` (nuid, place_id, nradius, schedule_id, nvisibility, ncontent) 
                      VALUES (:nuid, :place_id, :nradius, :schedule_id, :nvisibility, :ncontent)");   

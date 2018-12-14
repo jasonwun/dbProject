@@ -52,6 +52,10 @@ $uid = $_SESSION["uid"];
       <br>
       EndTime: <input type="time" style="margin-top:10px"  name="nendtime"/>
       <br>
+      <input type="checkbox" name="mon"> Mon <input type="checkbox" name="tue">Tue
+        <input type="checkbox" name="wed">Wed<input type="checkbox" name="thu">Thu
+        <input type="checkbox" name="fri">Tue<input type="checkbox" name="sat">Sat
+        <input type="checkbox" name="sun">Sun<br>
       Visibility: <select Style="width:100px; margin-top:10px" name="nvisibility">
                 <?php
                     if($visibility == "everyone"){

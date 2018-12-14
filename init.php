@@ -37,9 +37,7 @@
       $ulng = $_SESSION['ulng'];  }
   else{
       $ulng = -73.9754976;
-  }    
-  
-  
+  }
   $utime = $_SESSION['utime'];
   $ustate = $_SESSION['ustate'];
   ?>
@@ -48,7 +46,11 @@
     <div id="map" style="width: 50%; height: 100%; float:left"></div>
 
     <div>
-        <label>Hello <?php echo $username?></label>
+        <label>Hello <?php echo $username?></label><br>
+        <label id="latlabel">Your current location is at <?php echo $ulat?></label>
+        <label id="lnglabel">, <?php echo $ulng?></label>
+        <br>
+        <label>Your current time is <?php echo $utime?></label>
     </div>
     <br>
     <div>
@@ -66,18 +68,10 @@
     </div>
     <br>
     <div id="loctimediv">
+      <form method="post" action="UpdateTime.php" style="margin-top : 15px">
           <label >Time Selector</label>
-          <input type="datetime-local" name="userDate" id="usercurrenttime"/>
-          <input type="button" value="update" id="updateusercurrenttime"/>
-          <label id="timeupdatestatus">The datetime value should not be earliear than 2018-09-25 00:00:00</label>
-    </div>
-    <div>
-    <form method="post" action="UpdateTime.php" style="margin-top : 15px">
-        <input type="range" name="timeEnter" min="0" max="1440" step="1" value = "60"
-              oninput="showVal(this.value)" onchange="showVal(this.value)"><br>
-        <span id="valBox">1:00</span>
-        <input type="hidden" name="t_string" id="t_input"/>
-        <input type=submit name="updateTime" value="Update Time"/>
+          <input type="datetime-local" name="userDatetime" id="usercurrenttime"/>
+          <input type="submit" value="update" id="updateusercurrenttime"/>
       </form>
 
     </div>
@@ -170,6 +164,8 @@
               usermarker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
               UpdateUserProfile(usermarker.getPosition().lat(),usermarker.getPosition().lng());
               UpdateMapMarkerView();
+              document.getElementById("latlabel").innerHTML = "Your current location is at " + event.latLng.lat();
+              document.getElementById("lnglabel").innerHTML = ", " + event.latLng.lng();
           });
 
           usermarker.addListener('dragend', function(event){
@@ -177,6 +173,8 @@
             var lng = usermarker.getPosition().lng();
             UpdateUserProfile(lat,lng);
             UpdateMapMarkerView();
+            document.getElementById("latlabel").innerHTML = "Your current location is at " + lat;
+            document.getElementById("lnglabel").innerHTML = ", " + lng;
           });
           
           var latlng = new google.maps.LatLng(<?php echo $ulat;?>, <?php echo $ulng;?>);
@@ -227,6 +225,7 @@
               }
               if(NotesNodes.length > 0){
                 map.fitBounds(bounds);
+                
               }
               
             });

@@ -17,13 +17,15 @@ Function NewUser(){
   $userName = $_POST['user'];
   $email = $_POST['email'];
   $password =  $_POST['pass'];
+  $time = date("Y-m-d H:i:s");
   //$query = sprintf("INSERT INTO Users(username,email,password) VALUES ('%s','%s','%s')",$userName, $email, $password);
   //$result = $pdo->query($query);
-  $stmt = $pdo->prepare("INSERT INTO users (username, email, password) 
+  $stmt = $pdo->prepare("INSERT INTO users (username, email, password, utime) 
                      VALUES (:username, :email, :password)");
   $stmt->bindParam(':username', $userName);
   $stmt->bindParam(':email', $email);
   $stmt->bindParam(':password', $password);
+  $stmt->bindParam(':utimt', $utime);
   $stmt->execute();    
   //if($result){
     	echo "YOUR REGISTRATION IS COMPLETED...";

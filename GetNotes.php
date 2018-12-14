@@ -16,9 +16,8 @@ select nid, nuid, place_name, address, lat, lng, nradius, nvisibility, ncontent,
 natural join location 
 natural join schedule
 natural join notetag 
-natural join tag 
-left join repeatschedule on repeatschedule.schedule_id = note.schedule_id
-left join repeats on repeatschedule.repeat_id = repeats.repeat_id;";
+natural join tag
+left join repeats on schedule.schedule_id = repeats.schedule_id;";
 
 $pdo->query($createAllNotequery);
 
